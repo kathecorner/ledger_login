@@ -1,11 +1,19 @@
 'use client';
-import { useState, useRef, FormEvent, ChangeEvent } from 'react';
+import { useState, useRef, FormEvent, ChangeEvent, useEffect } from 'react';
 
 export default function PurchaseForm({ cardDetails }: { cardDetails: Record<string, any> }) {
   const [showForm, setShowForm] = useState(false);
   const [purchaseResult, setPurchaseResult] = useState<Record<string, any> | null>(null);
   const [clearingResult, setClearingResult] = useState<Record<string, any> | null>(null);
+  const [refundResult, setRefundResult] = useState<Record<string, any> | null>(null);
+  const [refundAmount, setRefundAmount] = useState<number>(1500);
   const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (purchaseResult || clearingResult || refundResult) {
+      formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }
+  }, [purchaseResult, clearingResult, refundResult]);
 
   // Controlled form state
   const [formData, setFormData] = useState({
@@ -29,7 +37,7 @@ export default function PurchaseForm({ cardDetails }: { cardDetails: Record<stri
   ) => {
     const { name, value, type } = e.target;
     const newValue =
-        type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+      type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
     setFormData(prev => ({
       ...prev,
       [name]: newValue,
@@ -72,7 +80,9 @@ export default function PurchaseForm({ cardDetails }: { cardDetails: Record<stri
 
       setPurchaseResult(data);
       setClearingResult(null);
-      setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth' }), 200);
+      setRefundResult(null);
+      setRefundAmount(Number(formData.billingAmount)); // Default refund = billing amount
+      //setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth' }), 200);
     } catch (err) {
       console.error(err);
       alert('An error occurred during purchase.');
@@ -116,10 +126,53 @@ export default function PurchaseForm({ cardDetails }: { cardDetails: Record<stri
 
       const data = await res.json();
       setClearingResult(data);
-      setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth' }), 200);
+      setRefundResult(null);
+      //setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth' }), 200);
     } catch (err) {
       console.error(err);
       alert('An error occurred during clearing.');
+    }
+  };
+
+  const handleRefund = async () => {
+    if (!purchaseResult) {
+      alert('No purchase result found. Please run purchase first.');
+      return;
+    }
+
+    const refundPayload = {
+      ...formData,
+      acquirerAmount: {
+        amount: refundAmount,
+        currencyCode: "JPY",
+      },
+      billingAmount: {
+        amount: refundAmount,
+        currencyCode: "JPY",
+      },
+      originalMsgRequest: purchaseResult.requestMsg,
+      originalMsgResponse: purchaseResult.responseMsg,
+    };
+
+    try {
+      const res = await fetch('/api/refund', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(refundPayload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(`Refund failed: ${data.error || res.statusText}`);
+        return;
+      }
+
+      setRefundResult(data);
+      //setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth' }), 200);
+    } catch (err) {
+      console.error(err);
+      alert('An error occurred during refund.');
     }
   };
 
@@ -199,6 +252,29 @@ export default function PurchaseForm({ cardDetails }: { cardDetails: Record<stri
             <div className="mt-6 p-4 bg-green-50 rounded shadow">
               <h3 className="font-bold mb-2">Clearing Result</h3>
               <pre className="text-xs">{JSON.stringify(clearingResult, null, 2)}</pre>
+
+              <div className="mt-4">
+                <label className="block font-medium mb-1">Refund Amount</label>
+                <input
+                  type="number"
+                  value={refundAmount}
+                  onChange={(e) => setRefundAmount(Number(e.target.value))}
+                  className="border p-2 rounded w-full"
+                />
+                <button
+                  onClick={handleRefund}
+                  className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                >
+                  Initiate Refund
+                </button>
+              </div>
+            </div>
+          )}
+
+          {refundResult && (
+            <div className="mt-6 p-4 bg-yellow-50 rounded shadow">
+              <h3 className="font-bold mb-2">Refund Result</h3>
+              <pre className="text-xs">{JSON.stringify(refundResult, null, 2)}</pre>
             </div>
           )}
         </div>

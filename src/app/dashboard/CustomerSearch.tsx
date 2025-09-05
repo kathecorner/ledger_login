@@ -112,12 +112,14 @@ export default function CustomerSearch() {
   const handleCardClick = (card: Card) => {
     console.log(`You selected Card ID: ${card.id}`);
     router.push(`/cards/${card.id}`); // Navigate to a new page
+    //let customerNumber="10000030460784";
     // This is where the next API call can be triggered in the future
   };
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-md">
       <form onSubmit={handleSearch} className="flex gap-2">
+        <label htmlFor="customerNumber" className="sr-only">Customer Number</label>
         <input
           type="text"
           placeholder="Enter customer number"
