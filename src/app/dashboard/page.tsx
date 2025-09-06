@@ -1,6 +1,7 @@
 // app/dashboard/page.tsx
 import HeaderUser from './HeaderUser';
 import CustomerSearch from './CustomerSearch';
+import LogoutButton from './LogoutButton';
 
 export default function Dashboard() {
   return (
@@ -8,6 +9,7 @@ export default function Dashboard() {
       <header className="flex justify-between p-4 bg-white shadow-md">
         <h1 className="text-xl font-semibold text-gray-800">Dashboard</h1>
         <HeaderUser />
+        <LogoutButton />
       </header>
 
       <div className="max-w-xl mx-auto mt-10">

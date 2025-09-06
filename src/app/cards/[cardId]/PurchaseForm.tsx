@@ -229,7 +229,7 @@ export default function PurchaseForm({ cardDetails }: { cardDetails: Record<stri
             </div>
 
             <div className="col-span-1 md:col-span-2 mt-4">
-              <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full">
+              <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-1/4">
                 Submit Purchase
               </button>
             </div>
@@ -243,7 +243,7 @@ export default function PurchaseForm({ cardDetails }: { cardDetails: Record<stri
           )}
 
           <form onSubmit={handleClearing} className="mt-6">
-            <button type="submit" className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
+            <button type="submit" className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 w-1/4" >
               Clear Transaction
             </button>
           </form>
@@ -263,7 +263,7 @@ export default function PurchaseForm({ cardDetails }: { cardDetails: Record<stri
                 />
                 <button
                   onClick={handleRefund}
-                  className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                  className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 w-1/4"
                 >
                   Initiate Refund
                 </button>
