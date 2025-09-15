@@ -1,8 +1,13 @@
 // app/cards/[cardId]/page.tsx
 import { cookies } from 'next/headers';
 
-export default async function CardDetailsPage({ params }: { params: { cardId: string } }) {
-  const { cardId } = await params;
+type CardDetailsParams = Promise<{
+  cardId: string;
+}>;
+
+export default async function CardDetailsPage({ params }: { params: CardDetailsParams }) {
+
+  const cardId = params;
 
   // Retrieve the authToken from cookies
   const cookieStore = await cookies();
