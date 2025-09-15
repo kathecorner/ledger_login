@@ -44,10 +44,10 @@ export async function PUT(req: NextRequest) {
     }
 
     return NextResponse.json(parsedData, { status: response.status });
-  } catch (error: string | any) {
+  } catch (error: unknown) {
     console.error('Clearing API error:', error);
     return NextResponse.json(
-      { error: 'Clearing API failed', details: error.message },
+      { error: 'Clearing API failed', details: (error as Error).message },
       { status: 500 }
     );
   }
