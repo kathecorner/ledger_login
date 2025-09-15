@@ -26,8 +26,10 @@ interface Card {
   printedName?: string;
 }
 
+const customerIDProp = { customerID: "10000041390715" }; //初期値があればこちら
+
 export default function CustomerSearch() {
-  const [customerNumber, setCustomerNumber] = useState('');
+  const [customerNumber, setCustomerNumber] = useState('10000041390715');
   const [customerData, setCustomerData] = useState<Customer | null>(null);
   const [cards, setCards] = useState<Card[]>([]);
   const [history, setHistory] = useState<Customer[]>([]);
@@ -121,8 +123,8 @@ export default function CustomerSearch() {
       <form onSubmit={handleSearch} className="flex gap-2">
         <label htmlFor="customerNumber" className="sr-only">Customer Number</label>
         <input
-          type="text"
-          placeholder="Enter customer number"
+          type="text"          
+          placeholder="Enter Customer ID"
           value={customerNumber}
           onChange={(e) => setCustomerNumber(e.target.value)}
           className="flex-1 rounded-lg border px-3 py-2 text-gray-700"
@@ -132,7 +134,7 @@ export default function CustomerSearch() {
           className="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
           disabled={loading}
         >
-          {loading ? 'Searching…' : 'Search 10000041390715'}
+          {loading ? 'Searching…' : 'Search'}
         </button>
       </form>
 

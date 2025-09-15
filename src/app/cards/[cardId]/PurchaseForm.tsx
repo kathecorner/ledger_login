@@ -1,5 +1,6 @@
 'use client';
 import { useState, useRef, FormEvent, ChangeEvent, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function PurchaseForm({ cardDetails }: { cardDetails: Record<string, any> }) {
   const [showForm, setShowForm] = useState(false);
@@ -8,6 +9,7 @@ export default function PurchaseForm({ cardDetails }: { cardDetails: Record<stri
   const [refundResult, setRefundResult] = useState<Record<string, any> | null>(null);
   const [refundAmount, setRefundAmount] = useState<number>(1500);
   const formRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (purchaseResult || clearingResult || refundResult) {
@@ -277,8 +279,20 @@ export default function PurchaseForm({ cardDetails }: { cardDetails: Record<stri
               <pre className="text-xs">{JSON.stringify(refundResult, null, 2)}</pre>
             </div>
           )}
+
+          <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2">
+        <button
+          onClick={() => router.push('/dashboard')}
+          className="bg-gray-700 text-white px-6 py-3 rounded-full shadow-lg hover:bg-gray-800"
+        >
+          Back to Dashboard
+        </button>
+      </div>
+          
         </div>
       )}
     </div>
+    
+    
   );
 }

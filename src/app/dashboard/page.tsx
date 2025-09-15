@@ -14,6 +14,7 @@ export default function Dashboard() {
 
       <div className="max-w-xl mx-auto mt-10">
         <CustomerSearch />
+        
       </div>
     </main>
   );

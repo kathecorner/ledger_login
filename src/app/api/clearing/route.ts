@@ -44,7 +44,7 @@ export async function PUT(req: NextRequest) {
     }
 
     return NextResponse.json(parsedData, { status: response.status });
-  } catch (error: any) {
+  } catch (error: string | any) {
     console.error('Clearing API error:', error);
     return NextResponse.json(
       { error: 'Clearing API failed', details: error.message },
