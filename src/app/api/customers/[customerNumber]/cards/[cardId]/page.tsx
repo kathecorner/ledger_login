@@ -2,7 +2,7 @@
 import { cookies } from 'next/headers';
 
 export default async function CardDetailsPage({ params }: { params: { cardId: string } }) {
-  const { cardId } = params;
+  const { cardId } = await params;
 
   // Retrieve the authToken from cookies
   const cookieStore = await cookies();
