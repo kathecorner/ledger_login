@@ -2,11 +2,11 @@
 import { useState, useRef, FormEvent, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function PurchaseForm({ cardDetails }: { cardDetails: Record<string, any> }) {
+export default function PurchaseForm({ cardDetails }: { cardDetails: Record<string, unknown> }) {
   const [showForm, setShowForm] = useState(false);
-  const [purchaseResult, setPurchaseResult] = useState<Record<string, any> | null>(null);
-  const [clearingResult, setClearingResult] = useState<Record<string, any> | null>(null);
-  const [refundResult, setRefundResult] = useState<Record<string, any> | null>(null);
+  const [purchaseResult, setPurchaseResult] = useState<Record<string, unknown> | null>(null);
+  const [clearingResult, setClearingResult] = useState<Record<string, unknown> | null>(null);
+  const [refundResult, setRefundResult] = useState<Record<string, unknown> | null>(null);
   const [refundAmount, setRefundAmount] = useState<number>(1500);
   const formRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -213,7 +213,7 @@ export default function PurchaseForm({ cardDetails }: { cardDetails: Record<stri
                 <label className="block font-medium mb-1">{label}</label>
                 <input
                   name={name}
-                  value={(formData as any)[name]}
+                  value={(formData as unknown)[name]}
                   onChange={handleChange}
                   className="border p-2 rounded w-full"
                 />

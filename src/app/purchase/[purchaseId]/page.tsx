@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 interface PurchaseResponse {
   id: string;
   status?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export default async function PurchaseResultPage({ params }: { params: { purchaseId: string } }) {
@@ -49,8 +49,8 @@ export default async function PurchaseResultPage({ params }: { params: { purchas
         </div>
       </div>
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error(err);
-    return <div className="p-6 text-red-500">Error: {err.message}</div>;
+    return <div className="p-6 text-red-500">Error: {String(err)}</div>;
   }
 }

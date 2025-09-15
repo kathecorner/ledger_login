@@ -26,7 +26,7 @@ interface Card {
   printedName?: string;
 }
 
-const customerIDProp = { customerID: "10000041390715" }; //初期値があればこちら
+//const customerIDProp = { customerID: "10000041390715" }; //初期値があればこちら
 
 export default function CustomerSearch() {
   const [customerNumber, setCustomerNumber] = useState('10000041390715');
