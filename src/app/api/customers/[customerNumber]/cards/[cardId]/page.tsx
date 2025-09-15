@@ -29,9 +29,9 @@ export default async function CardDetailsPage({ params }: { params: { cardId: st
     return <div className="p-6 text-red-500">Failed to fetch card details</div>;
   }
 
-  const cardDetails: Record<string, any> = await response.json();
+  const cardDetails: Record<string, unknown> = await response.json();
 
-  console.log(cardDetails.json());
+  console.log(cardDetails);
 
   return (
 <div className="p-6">

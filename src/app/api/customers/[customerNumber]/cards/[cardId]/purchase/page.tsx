@@ -17,14 +17,14 @@ export default function PurchasePage({ searchParams }: { searchParams: { pan: st
     expiry: searchParams.expiry,
   });
 
-  const [response, setResponse] = useState<any>(null);
+  const [response, setResponse] = useState<unknown>(null);
 
-  const handleChange = (e: any) => {
-    const { name, value } = e.target;
+  const handleChange = (e: unknown) => {
+    const { name, value } = (e as React.ChangeEvent<HTMLInputElement>).target;
     setForm({ ...form, [name]: value });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const res = await fetch('/api/purchase', {
       method: 'POST',
@@ -45,7 +45,7 @@ export default function PurchasePage({ searchParams }: { searchParams: { pan: st
             <input
               type="text"
               name={field}
-              value={(form as any)[field]}
+              value={(form as unknown)[field]}
               onChange={handleChange}
               className="border p-2 w-full rounded"
             />
