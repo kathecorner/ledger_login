@@ -2,6 +2,12 @@
 
 import { useState } from 'react';
 
+type searchParams = Promise<{
+  pan: string;
+  cvv2: string;
+  expiry: string;
+}>;
+
 export default function PurchasePage({ searchParams }: { searchParams: { pan: string; cvv2: string; expiry: string } }) {
   const [form, setForm] = useState({
     acceptorAddress: '1-2-3 Shibuya',
