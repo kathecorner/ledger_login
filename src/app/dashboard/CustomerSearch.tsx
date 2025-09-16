@@ -29,7 +29,8 @@ interface Card {
 //const customerIDProp = { customerID: "10000041390715" }; //初期値があればこちら
 
 export default function CustomerSearch() {
-  const [customerNumber, setCustomerNumber] = useState('10000041390715');
+  //const [customerNumber, setCustomerNumber] = useState('10000041390715');
+  const [customerNumber, setCustomerNumber] = useState('');
   const [customerData, setCustomerData] = useState<Customer | null>(null);
   const [cards, setCards] = useState<Card[]>([]);
   const [history, setHistory] = useState<Customer[]>([]);
