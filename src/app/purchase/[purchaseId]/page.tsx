@@ -7,8 +7,8 @@ interface PurchaseResponse {
   [key: string]: unknown;
 }
 
-export default async function PurchaseResultPage({ params }: { params: { purchaseId: string } }) {
-  const { purchaseId } = params;
+export default async function PurchaseResultPage({ params }: { params: Promise<{ purchaseId: string }> }) {
+  const { purchaseId } = await params;
 
   // Retrieve authToken
   const cookieStore = await cookies();
