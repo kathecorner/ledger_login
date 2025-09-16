@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers';
 import PurchaseForm from './PurchaseForm';
 
-export default async function CardDetailsPage({ params }: { params: { cardId: string } }) {
-  const { cardId } = params;
+export default async function CardDetailsPage({ params }: { params: Promise<{ cardId: string }> }) {
+  const { cardId } = await params;
   const cookieStore = await cookies();
   const authToken = cookieStore.get('authToken')?.value;
 
