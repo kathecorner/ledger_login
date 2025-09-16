@@ -4,9 +4,9 @@ import { cookies } from 'next/headers';
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { customerNumber: string } }
+  { params }: { params: Promise<{ customerNumber: string }> }
 ) {
-  const { customerNumber } = params;
+  const { customerNumber } = await params;
 
   try {
     // Retrieve token from cookies (set during login)
