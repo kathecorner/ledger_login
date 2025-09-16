@@ -5,6 +5,7 @@ export async function POST(request: Request) {
     const { userName, password, partnerName } = await request.json();
 
     if (!userName || !password || !partnerName) {
+      console.log(request.json());
       return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
     }
 
