@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 export async function GET(
   req: Request,
-  { params }: { params: { customerNumber: string } }
+  { params }: { params: Promise<{ customerNumber: string }> }
 ) {
   const cookieStore = await cookies();
   const token = cookieStore.get('authToken')?.value;
@@ -15,7 +15,7 @@ export async function GET(
 
   try {
     const response = await fetch(
-      `https://partner.dune1.euw-1.aws.tst.e6tech.net/restful/v1/customers/${params.customerNumber}`,
+      `https://partner.dune1.euw-1.aws.tst.e6tech.net/restful/v1/customers/${(await params).customerNumber}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
