@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 
-type searchParams = Promise<{
+type searchCardParams = Promise<{
   pan: string;
   cvv2: string;
   expiry: string;
 }>;
 
-export default function PurchasePage({ searchParams }: { searchParams: { pan: string; cvv2: string; expiry: string } }) {
+export default function PurchasePage({ searchParams }: { searchParams: searchCardParams }) {
   const [form, setForm] = useState({
     acceptorAddress: '1-2-3 Shibuya',
     acceptorCity: 'Tokyo',
@@ -18,9 +18,9 @@ export default function PurchasePage({ searchParams }: { searchParams: { pan: st
     cardPresent: true,
     acquirerAmount: { amount: 1000, currencyCode: 'JPY' },
     billingAmount: { amount: 1000, currencyCode: 'JPY' },
-    pan: searchParams.pan,
-    cvv2: searchParams.cvv2,
-    expiry: searchParams.expiry,
+    pan: searchParams,
+    cvv2: searchParams,
+    expiry: searchParams,
   });
 
   const [response, setResponse] = useState<unknown>(null);
