@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// prisma/schema.prisma
+
+model ClearingTransaction {
+  id                  String   @id @default(cuid())
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  // Request fields (non-sensitive)
+  acceptorAddress     String
+  acceptorCity        String
+  acceptorCountryCode String
+  mcc                 String
+  transactionType     String
+  cardPresent         Boolean
+
+  // PCI-safe card info
+  panLast4            String   // e.g. "0023"
+  expiryMonth         Int
+  expiryYear          Int
+
+  // Amounts
+  acquirerAmount      Int
+  acquirerCurrency    String
+  billingAmount       Int
+  billingCurrency     String
+
+  // Original purchase messages
+  originalMsgRequest  Json
+  originalMsgResponse Json
+
+  // Clearing response
+  responseData        Json
+  statusCode          Int
+  errorMessage        String?
+
+  @@index([createdAt])
+  @@index([transactionType])
+  @@index([statusCode])
+}

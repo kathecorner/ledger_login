@@ -2,10 +2,8 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-export async function GET(
-  req: Request,
-  { params }: { params: Promise<{ customerNumber: string }> }
-) {
+export async function GET(req: Request, { params }: { params: Promise<{ customerNumber: string }> }) 
+{
   const cookieStore = await cookies();
   const token = cookieStore.get('authToken')?.value;
 
